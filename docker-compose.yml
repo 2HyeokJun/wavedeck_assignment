@@ -1,0 +1,35 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    env_file:
+      - ./env/.${NODE_ENV:-development}.env
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=${NODE_ENV:-development}
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.0
+    ports:
+      - "13306:3306"
+    env_file:
+      - ./env/.${NODE_ENV:-development}.env
+    environment:
+      - MYSQL_DATABASE=wavedeck
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-password}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    restart: unless-stopped
+
+volumes:
+  mysql-data:
