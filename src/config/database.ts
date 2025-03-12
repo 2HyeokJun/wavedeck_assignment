@@ -1,10 +1,20 @@
-import { Sequelize } from "sequelize-typescript";
+import { Sequelize } from "sequelize";
+import dotenv from "dotenv";
 import path from "path";
 
-const { DB_HOST, DB_PORT, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_SYNC } =
-  process.env;
+const NODE_ENV = process.env.NODE_ENV || "development";
+const envPath = path.resolve(process.cwd(), `env/.${NODE_ENV}.env`);
+dotenv.config({ path: envPath });
 
-// Sequelize 인스턴스 생성
+const {
+  DB_HOST,
+  DB_PORT,
+  DB_USERNAME,
+  DB_PASSWORD,
+  DB_DATABASE,
+  DB_SYNC = "true",
+} = process.env;
+
 const sequelize = new Sequelize({
   dialect: "mysql",
   host: DB_HOST,
@@ -13,7 +23,6 @@ const sequelize = new Sequelize({
   password: DB_PASSWORD,
   database: DB_DATABASE,
   logging: process.env.NODE_ENV === "development" ? console.log : false,
-  models: [path.join(__dirname, "../models/**/*.model.ts")],
   define: {
     timestamps: true,
     underscored: true,
