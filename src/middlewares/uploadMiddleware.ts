@@ -2,8 +2,9 @@ import { NextFunction, Request, Response } from "express";
 import multer, { StorageEngine, Multer } from "multer";
 import path from "path";
 import fs from "fs/promises";
-import { multerFileType } from "../types/utils";
-import { PayloadTooLargeError } from "../utils/ApiError";
+import { multerFileType, RequestBodyType } from "../types/utils";
+import { BadRequestError, PayloadTooLargeError } from "../utils/ApiError";
+import { AudioUploadRequest } from "../types/generated";
 
 const fileUploadPaths: string = "uploads/"; // 파일 저장 경로
 const MAXIMUM_FILE_SIZE: number = 10 * 1024 * 1024;
@@ -46,18 +47,26 @@ const storageOptions: StorageEngine = multer.diskStorage({
 
 export const fileUpload: Multer = multer({ storage: storageOptions });
 
-export const validateFileSize = async (
-  req: Request,
+export const validateFileInfo = async (
+  req: RequestBodyType<AudioUploadRequest>,
   res: Response,
   next: NextFunction
 ): Promise<void> => {
   const file: multerFileType | undefined = req.file;
   if (file === undefined) {
-    return next();
+    return next(new BadRequestError("file not exists"));
   }
   const fileSize = getFileSize(file);
+  const checkIsValidFileName =
+    req.body.fileName === file.originalname.normalize("NFC");
+  const filePath: string = path.resolve(file.path);
+
+  if (!checkIsValidFileName) {
+    deleteFile(filePath);
+    return next(new BadRequestError("invalid file metadata"));
+  }
+
   if (!checkIsValidateSize(fileSize)) {
-    const filePath: string = path.resolve(file.path);
     deleteFile(filePath);
     return next(new PayloadTooLargeError(`File Size exceeds limit`));
   }
