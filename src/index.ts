@@ -3,6 +3,7 @@ import bodyParser from "body-parser";
 import { apiRouter } from "./api/routes";
 import { errorHandler } from "./api/middlewares/errorMiddleware";
 import { aiRouter } from "./ai/aiRouter";
+import { requestLogger } from "./api/middlewares/loggingMiddleware";
 
 export const app = express();
 export const aiApp = express();
@@ -11,6 +12,7 @@ const aiPORT = process.env.AI_PORT || 3001;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(requestLogger);
 
 aiApp.use(bodyParser.json());
 aiApp.use(bodyParser.urlencoded({ extended: true }));
