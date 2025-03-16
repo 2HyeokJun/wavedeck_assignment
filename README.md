@@ -56,3 +56,5 @@ wavedeck
 ```
 
 5. [postman documentation](https://documenter.getpostman.com/view/17071448/2sAYkBt2Qf)
+
+6. api 로직 순서도: ./diagrams
