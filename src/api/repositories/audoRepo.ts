@@ -1,5 +1,5 @@
 import { Attributes } from "sequelize";
-import Audio from "../models/audio";
+import { Audio } from "../models/audio";
 import { AudioDeleteRequest } from "../types/generated";
 
 type insertAudioFileParams = Omit<

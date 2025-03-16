@@ -1,7 +1,7 @@
 import { Model, DataTypes } from "sequelize";
 import sequelize from "../config/database";
 
-class Audio extends Model {
+export class Audio extends Model {
   public id!: number;
   public userId!: number;
   public fileName!: string;
@@ -69,4 +69,60 @@ Audio.init(
   }
 );
 
-export default Audio;
+export class AITasks extends Model {
+  public taskId!: number;
+  public fileId!: number;
+  public userId!: number;
+  public voiceId!: number;
+  public pitch!: number;
+  public status!: "pending" | "processing" | "completed" | "failed";
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
+}
+
+AITasks.init(
+  {
+    taskId: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    fileId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    voiceId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    pitch: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+      defaultValue: 0,
+    },
+    status: {
+      type: DataTypes.ENUM("pending", "processing", "completed", "failed"),
+      allowNull: false,
+      defaultValue: "pending",
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
+  },
+  {
+    sequelize,
+    tableName: "ai_tasks",
+    timestamps: true,
+  }
+);
