@@ -14,6 +14,7 @@ import {
   updateAITaskStatusById,
 } from "../repositories/inferenceRepo";
 
+// AI 서버에 변환 요청을 보내고 응답을 받는 함수
 const requestInferenceAudio = async (data: any): Promise<any> => {
   const MOCK_AI_SERVER: string = "http://localhost:3001/convert";
 
@@ -32,12 +33,13 @@ const requestInferenceAudio = async (data: any): Promise<any> => {
   }
 };
 
+// requestInferenceAudio를 최대 5초동안 계속해서 반복해서 요청하는 함수
 const retryWithMaximumTimeOut = async (data: AudioInferencePayload) => {
   const TOTAL_TIMEOUT = 5000; // 전체 함수의 최대 실행 시간 5초
   // 전체 타임아웃을 설정하는 Promise
   const totalTimeoutPromise = new Promise<never>((_, reject) => {
     setTimeout(() => {
-      reject(new Error("전체 요청 시간이 초과되었습니다 (5초 제한)"));
+      reject(new Error("Internal Server Error"));
     }, TOTAL_TIMEOUT);
   });
 
@@ -58,6 +60,7 @@ const retryWithMaximumTimeOut = async (data: AudioInferencePayload) => {
   return Promise.race([retryPromise, totalTimeoutPromise]);
 };
 
+// 권한이 있는 오디오를 변환 가능하는지 검증하고, 변환 요청에 따른 결과값을 반환하는 컨트롤러
 export const inferenceAudio = async (
   req: RequestWithAuth<AudioInferenceRequest>,
   res: Response,
@@ -99,6 +102,12 @@ export const inferenceAudio = async (
     console.error("error:", error.message);
     taskStatus = "failed";
     updateAITaskStatusById({ taskId, status: taskStatus });
-    res.status(500).send({ error: error.message });
+    res.status(500).send({
+      status: false,
+      error: {
+        code: "INTERNAL_SERVER_ERROR",
+        message: error.message,
+      },
+    });
   }
 };

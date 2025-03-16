@@ -9,6 +9,7 @@ import { AudioUploadRequest } from "../types/generated";
 const fileUploadPaths: string = "uploads/"; // 파일 저장 경로
 const MAXIMUM_FILE_SIZE: number = 10 * 1024 * 1024;
 
+// 파일명을 읽어온 뒤 중복이면 파일명(1).확장자, 파일명(2).확장자, ...의 형태로 저장
 const getFileName = async (
   destination: string,
   filename: string
@@ -47,6 +48,11 @@ const storageOptions: StorageEngine = multer.diskStorage({
 
 export const fileUpload: Multer = multer({ storage: storageOptions });
 
+/*
+1. 파일이 업로드 됐는지 검증
+2. req.body.fileSize가 10mb 이하인지 검증
+3. 파일명이 multer로 받아온 파일명과 같은지 검증
+*/
 export const validateFileInfo = async (
   req: RequestBodyType<AudioUploadRequest>,
   res: Response,
@@ -81,6 +87,7 @@ const checkIsValidateSize = (fileSize: number): Boolean => {
   return fileSize <= MAXIMUM_FILE_SIZE;
 };
 
+// 파일 삭제
 export const deleteFile = async (filePath: string): Promise<Boolean> => {
   try {
     await fs.unlink(filePath);

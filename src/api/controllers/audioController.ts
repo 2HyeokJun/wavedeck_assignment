@@ -16,6 +16,7 @@ import {
 import { BadRequestError, InternalServerError } from "../utils/ApiError";
 import { deleteFile } from "../middlewares/uploadMiddleware";
 
+// 오디오 파일 업로드
 export const uploadAudio = async (
   req: RequestWithMetadata<AudioUploadRequest>,
   res: Response
@@ -50,6 +51,7 @@ export const uploadAudio = async (
   res.send(response);
 };
 
+// 오디오 파일에 대한 삭제 권한이 있는지 검증한 뒤 오디오 파일 삭제
 export const deleteAudio = async (
   req: RequestWithAuth<AudioDeleteRequest>,
   res: Response,
