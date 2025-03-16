@@ -4,8 +4,8 @@ async function generateTypes() {
   console.log("Generating TypeScript interfaces from Joi schemas...");
 
   const result = await convertFromDirectory({
-    schemaDirectory: "./src/schemas", // Joi 스키마가 있는 디렉토리
-    typeOutputDirectory: "./src/types/generated", // 생성된 인터페이스를 저장할 디렉토리
+    schemaDirectory: "./src/api/schemas", // Joi 스키마가 있는 디렉토리
+    typeOutputDirectory: "./src/api/types/generated", // 생성된 인터페이스를 저장할 디렉토리
     debug: true, // 디버그 정보 출력
     defaultToRequired: false, // 필수가 아닌 경우 optional로 처리
     useLabelAsInterfaceName: false, // .meta({className: ''}) 사용

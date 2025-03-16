@@ -7,7 +7,7 @@ import {
   RequestWithAuth,
   RequestWithMetadata,
 } from "../types/utils";
-import * as db from "../repositories/audoRepo";
+import * as db from "../repositories/audioRepo";
 import { getKST } from "../dayjs";
 import {
   deleteAudioResponseSchema,
