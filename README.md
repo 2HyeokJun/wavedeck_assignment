@@ -30,3 +30,9 @@
 ```
 NODE_ENV=production docker-compose up
 ```
+
+3. db 마이그레이션 파일
+
+```
+src/api/config/database.ts
+```
