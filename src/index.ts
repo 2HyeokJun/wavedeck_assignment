@@ -1,14 +1,16 @@
 import express, { Request, Response } from "express";
 import bodyParser from "body-parser";
+import { apiRouter } from "./routes";
+import { errorHandler } from "./middlewares/errorMiddleware";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 미들웨어
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// 기본 경로
+app.use("/api", apiRouter);
+
 app.get("/health", (req: Request, res: Response) => {
   res.status(200).json({
     message: "Wavedeck API 서버 테스트",
@@ -16,7 +18,7 @@ app.get("/health", (req: Request, res: Response) => {
   });
 });
 
-// 서버 시작
+app.use(errorHandler);
 app.listen(PORT, () => {
   console.log(`서버가 포트 ${PORT}에서 실행 중입니다.`);
   console.log(`환경: ${process.env.NODE_ENV || "development"}`);

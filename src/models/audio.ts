@@ -11,9 +11,7 @@ class Audio extends Model {
   public duration!: number;
   public metadata!: any;
   public previewFilePath?: string;
-  public status!: string;
   public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
 }
 
 Audio.init(
@@ -62,12 +60,6 @@ Audio.init(
       type: DataTypes.STRING,
       allowNull: true,
       comment: "미리보기 파일 저장 경로",
-    },
-    status: {
-      type: DataTypes.ENUM("active", "deleted"),
-      defaultValue: "active",
-      allowNull: false,
-      comment: "active: 유효한 파일, deleted: 파일 삭제됨",
     },
   },
   {
