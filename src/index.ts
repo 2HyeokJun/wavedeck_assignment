@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import bodyParser from "body-parser";
-import { apiRouter } from "./routes";
-import { errorHandler } from "./middlewares/errorMiddleware";
+import { apiRouter } from "./api/routes";
+import { errorHandler } from "./api/middlewares/errorMiddleware";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
