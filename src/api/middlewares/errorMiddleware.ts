@@ -1,13 +1,19 @@
 import { Request, Response, NextFunction } from "express";
 import { ApiError, BadRequestError } from "../utils/ApiError";
 import { HTTP_STATUS } from "../constants/errorCodes";
+import { logger } from "../logger";
+import { RequestWithReqId } from "./loggingMiddleware";
 
 export const errorHandler = (
   err: Error,
-  req: Request,
+  req: RequestWithReqId,
   res: Response,
   next: NextFunction
 ) => {
+  logger.error(`Error in request ${req.requestId}: ${err.message}`, {
+    requestId: req.requestId,
+    stack: err.stack,
+  });
   if (err instanceof ApiError || err instanceof BadRequestError) {
     return res.status(err.statusCode).json({
       success: false,

@@ -37,7 +37,9 @@
     "sequelize": "^6.19.0",
     "sequelize-typescript": "^2.1.3",
     "timezone": "^1.0.23",
-    "utc": "^0.1.0"
+    "utc": "^0.1.0",
+    "uuid": "^11.1.0",
+    "winston": "^3.17.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
