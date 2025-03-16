@@ -57,4 +57,16 @@ wavedeck
 
 5. [postman documentation](https://documenter.getpostman.com/view/17071448/2sAYkBt2Qf)
 
-6. api 로직 순서도: ./diagrams
+6. api 로직 순서도
+
+1) 음성 파일 업로드
+
+![uploads](./diagrams/file_upload_logic.png)
+
+2. ai 변환 요청
+
+![conversion](./diagrams/ai_request_response.png)
+
+7. DB_Guide
+
+   ![diagrams](./diagrams/image.png)
