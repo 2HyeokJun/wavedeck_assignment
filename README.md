@@ -28,5 +28,11 @@
 2. 컨테이너 실행
 
 ```
-NODE_ENV=production docker-compose up
+NODE_ENV=production npm run release
+```
+
+3. db 마이그레이션 파일
+
+```
+src/api/config/database.ts
 ```

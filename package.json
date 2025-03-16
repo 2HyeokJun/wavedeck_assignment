@@ -56,8 +56,10 @@
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.2.1",
+    "husky": "^9.1.7",
     "jest": "^28.1.2",
     "joi-to-typescript": "^4.15.0",
+    "lint-staged": "^15.5.0",
     "nodemon": "^2.0.15",
     "prettier": "^2.7.1",
     "supertest": "^6.2.4",
@@ -78,5 +80,16 @@
     "transform": {
       "^.+\\.ts$": "ts-jest"
     }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx}": [
+      "eslint --fix",
+      "git add"
+    ]
   }
 }
