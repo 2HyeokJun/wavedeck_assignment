@@ -1,6 +1,7 @@
 import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
 import path from "path";
+import { setRelations } from "../models/relations";
 
 const NODE_ENV = process.env.NODE_ENV || "development";
 const envPath = path.resolve(process.cwd(), `env/.${NODE_ENV}.env`);
@@ -32,10 +33,12 @@ const sequelize = new Sequelize({
 const connectDB = async () => {
   try {
     await sequelize.authenticate();
+    setRelations();
     console.log("데이터베이스 연결 성공");
 
     if (DB_SYNC === "true") {
       await sequelize.sync({ alter: true });
+
       console.log("데이터베이스 모델 동기화 완료");
     }
   } catch (error) {

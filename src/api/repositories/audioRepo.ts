@@ -1,5 +1,5 @@
 import { Attributes } from "sequelize";
-import Audio from "../models/audio";
+import { Audio } from "../models/audio";
 import { AudioDeleteRequest } from "../types/generated";
 
 type insertAudioFileParams = Omit<
@@ -29,16 +29,17 @@ export const insertAudioFile = async (
   }
 };
 
+interface selectAudioType {
+  audioId: number;
+  userId: number;
+}
 export const selectAudioByInfo = async (
-  data: AudioDeleteRequest & { userId: number }
+  data: selectAudioType
 ): Promise<Audio | null> => {
   return await Audio.findOne({
     where: {
       id: data.audioId,
       userId: data.userId,
-      duration: data.duration,
-      fileName: data.fileName,
-      fileSize: data.fileSize,
     },
   });
 };

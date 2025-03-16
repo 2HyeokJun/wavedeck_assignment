@@ -13,7 +13,7 @@ import {
 export const audioRouter = express.Router();
 
 audioRouter.post("*", validateAudioType);
-// POST /api/v1/common/upload/audio
+// [POST] /api/v1/common/upload/audio
 audioRouter.post(
   "/",
   validateSchema(uploadAudioRequestSchema, "body"),
@@ -21,12 +21,9 @@ audioRouter.post(
   c.uploadAudio
 );
 
-// DELETE /api/v1/common/upload/audio
+// [DELETE] /api/v1/common/upload/audio
 audioRouter.delete(
   "/",
   validateSchema(deleteAudioFileRequestSchema, "body"),
   c.deleteAudio
 );
-
-// GET /api/v1/common/upload/audio
-// audioRouter.get("/", c.getAllAudios);
