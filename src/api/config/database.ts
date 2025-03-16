@@ -37,7 +37,7 @@ const connectDB = async () => {
     console.log("데이터베이스 연결 성공");
 
     if (DB_SYNC === "true") {
-      await sequelize.sync({ alter: true });
+      await sequelize.sync({ force: true });
 
       console.log("데이터베이스 모델 동기화 완료");
     }
