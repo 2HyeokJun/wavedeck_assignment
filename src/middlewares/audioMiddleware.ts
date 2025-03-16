@@ -2,12 +2,14 @@ import { NextFunction, Request, Response } from "express";
 import {
   metaDataType,
   multerFileType,
+  RequestBodyType,
+  RequestWithAuth,
   RequestWithFile,
   RequestWithMetadata,
 } from "../types/utils";
 import { BadRequestError, UnSupportedMediaTypeError } from "../utils/ApiError";
 import ffmpeg from "fluent-ffmpeg";
-import { AudioUploadRequest } from "../types/generated";
+import { AudioDeleteRequest, AudioUploadRequest } from "../types/generated";
 import { deleteFile } from "./uploadMiddleware";
 
 const checkIsAudioFile = (fileInfo: multerFileType): Boolean => {
@@ -39,7 +41,7 @@ export const validateUserInput = (
   if (!checkIsCorrectMetadata(body, metadata)) {
     const fileInfo = req.file as multerFileType;
     deleteFile(fileInfo.path);
-    throw new BadRequestError("invalid file metadata");
+    return next(new BadRequestError("invalid file metadata"));
   }
   next();
 };

@@ -84,6 +84,7 @@ const checkIsValidateSize = (fileSize: number): Boolean => {
 export const deleteFile = async (filePath: string): Promise<Boolean> => {
   try {
     await fs.unlink(filePath);
+    console.log(`${filePath} 삭제됨`);
     return true;
   } catch (error) {
     console.error(error);

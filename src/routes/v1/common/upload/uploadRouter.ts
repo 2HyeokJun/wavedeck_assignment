@@ -7,6 +7,6 @@ import {
 
 export const uploadRouter = express.Router();
 
-uploadRouter.use(fileUpload.single("file"));
-uploadRouter.use(validateFileInfo);
+uploadRouter.post("*", fileUpload.single("file"));
+uploadRouter.post("*", validateFileInfo);
 uploadRouter.use("/audio", audioRouter);

@@ -7,15 +7,13 @@ import { multerFileType, validateTarget } from "../types/utils";
 export const validateSchema =
   (schema: Joi.ObjectSchema, target: validateTarget) =>
   (req: Request, res: Response, next: NextFunction) => {
-    const file: multerFileType | undefined = req.file;
-    console.log(file);
     const validateTarget: Request = req[target as keyof Request];
     const { error, value } = schema.validate(validateTarget, {
       abortEarly: false, // 모든 에러를 한번에 반환
     });
     if (error) {
-      throw new BadRequestError(
-        error.details.map((err) => err.message).join(", ")
+      return next(
+        new BadRequestError(error.details.map((err) => err.message).join(", "))
       );
     }
 

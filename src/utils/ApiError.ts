@@ -59,3 +59,14 @@ export class UnSupportedMediaTypeError extends ApiError {
     this.name = "PayloadTooLargeError";
   }
 }
+
+export class InternalServerError extends ApiError {
+  constructor(
+    message: string,
+    errorCode: string = ERROR_CODES.INTERNAL_SERVER_ERROR,
+    details?: any
+  ) {
+    super(message, HTTP_STATUS.INTERNAL_SERVER_ERROR, errorCode, true, details);
+    this.name = "INTERNAL_SERVER_ERROR";
+  }
+}

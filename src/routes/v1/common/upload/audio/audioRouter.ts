@@ -1,7 +1,10 @@
 import express from "express";
 import * as c from "../../../../../controllers/audioController";
 import { validateSchema } from "../../../../../middlewares/validationMiddleware";
-import { uploadAudioRequestSchema } from "../../../../../schemas/audioSchema";
+import {
+  deleteAudioFileRequestSchema,
+  uploadAudioRequestSchema,
+} from "../../../../../schemas/audioSchema";
 import {
   validateAudioType,
   validateUserInput,
@@ -9,13 +12,20 @@ import {
 
 export const audioRouter = express.Router();
 
-audioRouter.use(validateAudioType);
+audioRouter.post("*", validateAudioType);
 // POST /api/v1/common/upload/audio
 audioRouter.post(
   "/",
   validateSchema(uploadAudioRequestSchema, "body"),
   validateUserInput,
   c.uploadAudio
+);
+
+// DELETE /api/v1/common/upload/audio
+audioRouter.delete(
+  "/",
+  validateSchema(deleteAudioFileRequestSchema, "body"),
+  c.deleteAudio
 );
 
 // GET /api/v1/common/upload/audio

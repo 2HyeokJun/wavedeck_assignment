@@ -1,5 +1,6 @@
 import { Attributes } from "sequelize";
 import Audio from "../models/audio";
+import { AudioDeleteRequest } from "../types/generated";
 
 type insertAudioFileParams = Omit<
   Attributes<Audio>,
@@ -26,4 +27,24 @@ export const insertAudioFile = async (
     console.error("오디오 데이터 삽입 오류:", error);
     throw error;
   }
+};
+
+export const selectAudioByInfo = async (
+  data: AudioDeleteRequest & { userId: number }
+): Promise<Audio | null> => {
+  return await Audio.findOne({
+    where: {
+      id: data.audioId,
+      userId: data.userId,
+      duration: data.duration,
+      fileName: data.fileName,
+      fileSize: data.fileSize,
+    },
+  });
+};
+
+export const deleteAudioById = async (data: number): Promise<number> => {
+  return await Audio.destroy({
+    where: { id: data },
+  });
 };
