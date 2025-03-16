@@ -4,6 +4,7 @@ import { HTTP_STATUS } from "../constants/errorCodes";
 import { logger } from "../logger";
 import { RequestWithReqId } from "./loggingMiddleware";
 
+// 모든 에러를 json으로 핸들링하도록 하는 에러 미들웨어
 export const errorHandler = (
   err: Error,
   req: RequestWithReqId,

@@ -12,11 +12,13 @@ import ffmpeg from "fluent-ffmpeg";
 import { AudioDeleteRequest, AudioUploadRequest } from "../types/generated";
 import { deleteFile } from "./uploadMiddleware";
 
+// multer의 mimeType으로 오디오 파일인지 검증
 const checkIsAudioFile = (fileInfo: multerFileType): Boolean => {
   const AUDIO_MIMETYPE: string = "audio/";
   return fileInfo.mimetype.startsWith(AUDIO_MIMETYPE);
 };
 
+// 오디오 파일을 검증한 뒤 ffmpeg의 metadata값을 읽어 req.metadata에 넘겨줌
 export const validateAudioType = async (
   req: RequestWithMetadata<AudioUploadRequest>,
   res: Response,
@@ -31,6 +33,7 @@ export const validateAudioType = async (
   next();
 };
 
+// metadata값을 읽어 req.body.filesize와 req.body.duration값이 올바른지 검증
 export const validateUserInput = (
   req: RequestWithMetadata<AudioUploadRequest>,
   res: Response,

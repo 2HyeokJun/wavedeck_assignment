@@ -4,6 +4,7 @@ import { promises as fs } from "fs";
 import { BadRequestError } from "../utils/ApiError";
 import { multerFileType, validateTarget } from "../types/utils";
 
+// req.body 또는 req.query를 통합해서 Joi의 validate를 할 수 있도록 해주는 함수
 export const validateSchema =
   (schema: Joi.ObjectSchema, target: validateTarget) =>
   (req: Request, res: Response, next: NextFunction) => {

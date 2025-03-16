@@ -9,20 +9,20 @@
 
 ```
   # 앱 설정
-  PORT=
-  NODE_ENV=
+  PORT=3000
+  NODE_ENV=production
 
   # 데이터베이스 설정
-  DB_HOST=
-  DB_PORT=
-  DB_USERNAME=
-  DB_PASSWORD=
-  DB_DATABASE=
+  DB_HOST=db
+  DB_PORT=3306
+  DB_USERNAME=root
+  DB_PASSWORD=password
+  DB_DATABASE=wavedeck
   DB_SYNC=true
 
   # MySQL 설정
-  MYSQL_ROOT_PASSWORD=
-  MYSQL_DATABASE=
+  MYSQL_ROOT_PASSWORD=password
+  MYSQL_DATABASE=wavedeck
 ```
 
 2. 컨테이너 실행
@@ -36,3 +36,23 @@ NODE_ENV=production npm run release
 ```
 src/api/config/database.ts
 ```
+
+4. 아키텍처 구조
+
+```
+wavedeck
+├── src
+│   ├── api
+│   │   └── routes
+│   │       └── v1
+│   │           └── common
+│   │               └── upload
+│   │                   └── audio
+│   │       └── inference
+│   │           └── sts
+│   ├── controllers
+│   ├── middlewares
+│   └── schemas
+```
+
+5. [postman documentation](https://documenter.getpostman.com/view/17071448/2sAYkBt2Qf)
